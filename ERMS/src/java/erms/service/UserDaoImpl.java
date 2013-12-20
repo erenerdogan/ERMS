@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDaoInterface {
     public void createUser(UserModel user) {
         String query = "INSERT INTO Users (uname, usurname, uaddress, uphone, uemail, upassword,uappkey) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            
+
             ps = db.getCon().prepareStatement(query);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getUserSurname());
@@ -45,10 +45,10 @@ public class UserDaoImpl implements UserDaoInterface {
 
             md = MessageDigest.getInstance("MD5");
 
-            byte[] b = md.digest((user.getUserName()+user.getUserSurname()+user.getUserMail()).getBytes());
-            String ak="";
+            byte[] b = md.digest((user.getUserName() + user.getUserSurname() + user.getUserMail()).getBytes());
+            String ak = "";
             for (byte c : b) {
-                ak +=c;
+                ak += c;
             }
             ps.setString(7, ak);
             ps.executeUpdate();
@@ -77,22 +77,26 @@ public class UserDaoImpl implements UserDaoInterface {
 
     @Override
     public UserModel getUser(String email, String password) {
-        UserModel um = new UserModel();
+        UserModel um = null;
         String query = "SELECT * FROM USERS WHERE uemail = ? AND upassword= ?";
         try {
             ps = db.getCon().prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, password);
             rs = ps.executeQuery();
+
             while (rs.next()) {
-                um.setUserID(rs.getInt("uid"));
-                um.setUserMail(rs.getString("uemail"));
-                um.setUserName(rs.getString("uname"));
-                um.setUserSurname(rs.getString("usurname"));
-                um.setUserAddress(rs.getString("uaddress"));
-                um.setUserPhone(rs.getString("uphone"));
-                um.setUserAppKey(rs.getString("uappkey"));
-                um.setUserPassword(rs.getString("upassword"));
+                if (rs.getInt("uid") != 0) {
+                    um = new UserModel();
+                    um.setUserID(rs.getInt("uid"));
+                    um.setUserMail(rs.getString("uemail"));
+                    um.setUserName(rs.getString("uname"));
+                    um.setUserSurname(rs.getString("usurname"));
+                    um.setUserAddress(rs.getString("uaddress"));
+                    um.setUserPhone(rs.getString("uphone"));
+                    um.setUserAppKey(rs.getString("uappkey"));
+                    um.setUserPassword(rs.getString("upassword"));
+                }
             }
             ps.close();
             return um;
@@ -111,7 +115,7 @@ public class UserDaoImpl implements UserDaoInterface {
             ps.setInt(2, userID);
             ps.executeUpdate();
             ps.close();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

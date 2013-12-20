@@ -19,5 +19,5 @@ public interface ProductDaoInterface {
     void editProduct(ProductModel product);
     void editStatus(ProductModel product);
     List<ProductModel> getAllProduct(int userID);
-    ProductModel getProduct(int ID);
+    ProductModel getProduct(int categoryID,int productID);
 }

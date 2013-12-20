@@ -132,6 +132,7 @@ public class UserBean implements Serializable {
             appKey = um.getUserAppKey();
             return "admin?faces-redirect=true";
         }
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index?faces-redirect=true";
     }
 

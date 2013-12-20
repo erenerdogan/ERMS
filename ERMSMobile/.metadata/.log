@@ -473,3 +473,18 @@ java.lang.IllegalStateException: Workbench has not been created yet.
 
 !ENTRY org.eclipse.core.net 1 0 2013-12-20 01:37:28.923
 !MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+!SESSION 2013-12-20 19:00:28.041 -----------------------------------------------
+eclipse.buildId=v22.0.5-757759
+java.version=1.7.0_25
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=tr_TR
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product -keyring /Users/eren/.eclipse_keyring -showlocation
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.ide.eclipse.adt.package.product -keyring /Users/eren/.eclipse_keyring -showlocation
+
+!ENTRY org.eclipse.ui 2 0 2013-12-20 19:00:35.136
+!MESSAGE Warnings while parsing the key bindings from the 'org.eclipse.ui.commands' extension point
+!SUBENTRY 1 org.eclipse.ui 2 0 2013-12-20 19:00:35.137
+!MESSAGE Could not parse key sequence: plug-in='org.eclipse.cdt.make.ui', id='org.eclipse.cdt.make.ui.targetBuildCommand', keySequence='Shift+F9'
+
+!ENTRY org.eclipse.core.net 1 0 2013-12-20 19:00:36.859
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences

@@ -66,10 +66,16 @@
                             <p:column headerText="Status">  
                                 <h:outputText value="#{p.productStatus}" />  
                             </p:column>
+                            <p:column headerText="Image">
+                                <p:graphicImage style="margin: 10px 100px 10px 100px; width: 100px; height: 100px;" value="images/#{p.productImageModel.imagePath}" >
+
+                                </p:graphicImage>
+                            </p:column>
 
                             <p:column> 
                                 <p:commandButton title="Edit" action="#{productBean.edit}" icon="ui-icon-pencil">
                                     <f:param name="productID" value="#{p.productID}"/>
+                                    <f:param name="categoryID" value="#{p.productCategoryModel.categoryID}"/>
                                 </p:commandButton>
                             </p:column>
                             <p:column>

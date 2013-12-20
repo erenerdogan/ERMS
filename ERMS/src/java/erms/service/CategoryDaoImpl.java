@@ -61,8 +61,38 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
 
     @Override
     public void editCategory(CategoryModel category, int userID) {
-        deleteCategory(category.getCategoryID());
-        createCategory(category, userID);
+        try {
+            int categoryID = category.getCategoryID();
+            String query = "SELECT * FROM CATEGORIES WHERE cid = ?";
+            ps = db.getCon().prepareStatement(query);
+            ps.setInt(1, categoryID);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                //cm.setCategoryID(rs.getInt("cid"));
+                if (!category.getCategoryName().equalsIgnoreCase(rs.getString("cname"))) {
+                    //cm.setCategoryName(category.getCategoryName());
+                    query = "UPDATE Categories SET cname=? WHERE cid=?";
+                    ps = db.getCon().prepareStatement(query);
+                    ps.setInt(2, categoryID);
+                    ps.setString(1, category.getCategoryName());
+                    ps.executeUpdate();
+                } 
+                
+                //yeni resim eklendimi
+                if (category.getCategoryImageModel() != null) {
+                    ImageModel im = category.getCategoryImageModel();
+                    int imageID = FactoryDao.getImageDao().addImage(im);
+                    query = "UPDATE Categories SET ciid=? WHERE cid=?";
+                    ps = db.getCon().prepareStatement(query);
+                    ps.setInt(2, categoryID);
+                    ps.setInt(1, imageID);
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -78,7 +108,7 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
                 cm.setCategoryID(rs.getInt("cid"));
                 cm.setCategoryName(rs.getString("cname"));
                 query = "SELECT * FROM IMAGES WHERE iid = ?";
-                
+
                 ps = db.getCon().prepareStatement(query);
                 ps.setInt(1, rs.getInt("ciid"));
                 ResultSet rs2 = ps.executeQuery();
@@ -114,7 +144,7 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
                 ps = db.getCon().prepareStatement(query);
                 ps.setInt(1, rs.getInt("ciid"));
                 rs = ps.executeQuery();
-                while (rs.next()) {          
+                while (rs.next()) {
                     ImageModel im = new ImageModel();
                     im.setImageID(rs.getInt("iid"));
                     im.setImagePath(rs.getString("ipath"));

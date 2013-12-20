@@ -6,6 +6,7 @@ package erms.bean;
 
 import erms.model.CategoryModel;
 import erms.model.ImageModel;
+import erms.model.ProductModel;
 import erms.service.FactoryDao;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -23,29 +24,39 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @RequestScoped
-public class CategoryEditBean implements Serializable {
-
-    @ManagedProperty(value = "#{param.categoryID}")
+public class ProductEditBean implements Serializable{
+    
+    @ManagedProperty(value="#{param.productID}")
+    private int productID;
+    @ManagedProperty(value="#{param.categoryID}")
     private int categoryID;
+    
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
+    
+    private String productName;
+    private String productDescription;
+    private boolean productStatus;
+    private double productPrice;
+    private int productCalorie;
+    
     private UploadedFile imageFile;
-    private String categoryName;
 
-    public CategoryEditBean() {
+    public ProductEditBean() {
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String, String> params =
                 fc.getExternalContext().getRequestParameterMap();
         categoryID = Integer.parseInt(params.get("categoryID"));
-        categoryName = FactoryDao.getCategoryDao().getCategory(categoryID).getCategoryName();
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+        productID = Integer.parseInt(params.get("productID"));
+        System.out.println("CategoryID : "+ categoryID + " ProductID : "+ productID);
+        
+        ProductModel pm = FactoryDao.getProductDao().getProduct(categoryID, productID);
+        productName = pm.getProductName();
+        productDescription = pm.getProductDescription();
+        productCalorie = pm.getProductCalorie();
+        productStatus = pm.isProductStatus();
+        productPrice =pm.getProductPrice();
+        
     }
 
     public UserBean getUserBean() {
@@ -54,6 +65,16 @@ public class CategoryEditBean implements Serializable {
 
     public void setUserBean(UserBean userBean) {
         this.userBean = userBean;
+    }
+    
+    
+
+    public int getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
     }
 
     public UploadedFile getImageFile() {
@@ -64,14 +85,54 @@ public class CategoryEditBean implements Serializable {
         this.imageFile = imageFile;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public int getProductCalorie() {
+        return productCalorie;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setProductCalorie(int productCalorie) {
+        this.productCalorie = productCalorie;
     }
 
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public double getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public boolean isProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(boolean productStatus) {
+        this.productStatus = productStatus;
+    }
+    
     public String save() {
         System.out.println("Save");
         ImageModel im = null;
@@ -81,15 +142,23 @@ public class CategoryEditBean implements Serializable {
             im.setImagePath(imageName);
             im.setImageThumb(imageName);
         }
+        
         CategoryModel cm = new CategoryModel();
-        System.out.println("Save Category ID : " + categoryID);
         cm.setCategoryID(categoryID);
-        cm.setCategoryImageModel(im);
-        cm.setCategoryName(categoryName);
+        
+        ProductModel pm = new ProductModel();
+        pm.setProductID(productID);
+        pm.setProductCalorie(productCalorie);
+        pm.setProductDescription(productDescription);
+        pm.setProductName(productName);
+        pm.setProductPrice(productPrice);
+        pm.setProductStatus(productStatus);
+        pm.setProductImageModel(im);
+        pm.setProductCategoryModel(cm);
+        
+        FactoryDao.getProductDao().editProduct(pm);
 
-        FactoryDao.getCategoryDao().editCategory(cm, userBean.getId());
-
-        return "category?" + categoryID + "faces-redirect=true";
+        return "product?faces-redirect=true";
     }
 
     public String fileUpload(UploadedFile f) {
@@ -119,4 +188,5 @@ public class CategoryEditBean implements Serializable {
             return null;
         }
     }
+    
 }

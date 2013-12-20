@@ -44,6 +44,7 @@
         <p:accordionPanel multiple="true">  
             <p:tab title="EDIT CATEGORY">  
                 <h:form enctype="multipart/form-data"> 
+                    <h:panelGrid columns="2">  
                     <p:outputLabel value="Category Name :"/>
                     <p:inputText value="#{categoryEditBean.categoryName}"/>
 
@@ -53,6 +54,7 @@
                     <p:commandButton value="Upload" action="#{categoryEditBean.save}" ajax="false">
                         <f:param name="categoryID" value="#{categoryEditBean.categoryID}"/>
                     </p:commandButton>
+                    </h:panelGrid>
                 </h:form>
             </p:tab>
         </p:accordionPanel>

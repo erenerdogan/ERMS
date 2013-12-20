@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Restaurant Menü Yönetim Paneli</title>
+        <style>
+            .menu
+            {
+                width: 120px !important;
+                margin-left:auto;
+                margin-right:auto;
+                padding: auto;
+                text-align: center;
+            }
+
+            .panelGridCenter {
+                margin: 0 auto;
+
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <p:menubar> 
+
+
+                <p:menuitem styleClass="menu" value="Profile" action="#{navigationBean.goAdmin}" icon="ui-icon-home"/> 
+                <p:menuitem styleClass="menu" value="Category" action="#{navigationBean.goCategory}" icon="ui-icon-gear"/>
+                <p:menuitem styleClass="menu" value="Product" action="#{navigationBean.goProduct}" icon="ui-icon-calculator"/>
+                <p:menuitem styleClass="menu" value="Table"  action="#{navigationBean.goTable}" icon="ui-icon-key"/>
+                <p:menuitem styleClass="menu" value="Order"  action="#{navigationBean.goOrder}" icon="ui-icon-cart"/>
+
+                <f:facet name="options">
+                    <p:outputLabel value="#{userBean.name} #{userBean.surname} "/>
+                    <p:commandButton id="submitButton" action="#{userBean.logout}" value="Logout" icon="ui-icon-extlink" />  
+                </f:facet>  
+            </p:menubar>
+        </h:form>
+
+        <p:accordionPanel multiple="true">  
+            <p:tab title="EDIT PRODUCT">  
+                 <h:form enctype="multipart/form-data">
+                    <h:panelGrid columns="2" cellpadding="10">  
+
+                        <p:outputLabel value="Category :"/>
+                        <p:selectOneMenu id="category" value="#{productEditBean.categoryID}" >  
+                            <f:selectItem itemLabel="Select Status" itemValue="" />  
+                            <f:selectItems value="#{productBean.categoryBean.allCategories}" var="c" itemLabel="#{c.categoryName}" itemValue="#{c.categoryID}"/>
+                        </p:selectOneMenu>
+
+
+                        <p:outputLabel value="Product Name : "/>
+                        <p:inputText value="#{productEditBean.productName}" required="true"/>
+
+
+                        <p:outputLabel value="Description : "/>
+                        <p:inputTextarea id="description" value="#{productEditBean.productDescription}" rows="5" cols="30" required="true" label="Description"/>
+
+
+                        <p:outputLabel value="Calorie : "/>
+                        <p:inputText value="#{productEditBean.productCalorie}" required="true"/>
+
+
+                        <p:outputLabel value="Price : "/>
+                        <p:inputText value="#{productEditBean.productPrice}" required="true"/>
+
+
+                        <p:outputLabel value="Status : " />  
+                        <p:selectBooleanCheckbox value="#{productEditBean.productStatus}" />
+
+
+                        <p:outputLabel value="Select Image :"/>
+                        <p:fileUpload value="#{productEditBean.imageFile}" mode="simple" required="true"/> 
+
+
+                        <p:commandButton value="Save" action="#{productEditBean.save}" ajax="false">
+                            <f:param name="categoryID" value="#{productEditBean.categoryID}"/>
+                            <f:param name="productID" value="#{productEditBean.productID}"/>
+                        </p:commandButton>
+                    </h:panelGrid>  
+
+                </h:form>
+            </p:tab>
+        </p:accordionPanel>
+    </h:body>
+</html>
+

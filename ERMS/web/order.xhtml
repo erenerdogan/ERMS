@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Restaurant Menü Yönetim Paneli</title>
+        <style>
+            .menu
+            {
+                width: 120px !important;
+                margin-left:auto;
+                margin-right:auto;
+                padding: auto;
+                text-align: center;
+            }
+
+            .panelGridCenter {
+                margin: 0 auto;
+
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <p:menubar> 
+
+
+                <p:menuitem styleClass="menu" value="Profile" action="#{navigationBean.goAdmin}" icon="ui-icon-home"/> 
+                <p:menuitem styleClass="menu" value="Category" action="#{navigationBean.goCategory}" icon="ui-icon-gear"/>
+                <p:menuitem styleClass="menu" value="Product" action="#{navigationBean.goProduct}" icon="ui-icon-calculator"/>
+                <p:menuitem styleClass="menu" value="Table"  action="#{navigationBean.goTable}" icon="ui-icon-key"/>
+                <p:menuitem styleClass="menu" value="Order"  action="#{navigationBean.goOrder}" icon="ui-icon-cart"/>
+
+                <f:facet name="options">
+                    <p:outputLabel value="#{userBean.name} #{userBean.surname} "/>
+                    <p:commandButton id="submitButton" action="#{userBean.logout}" value="Logout" icon="ui-icon-extlink" />  
+                </f:facet>  
+            </p:menubar>
+        </h:form>
+
+        <p:accordionPanel multiple="true">  
+            <p:tab title="ALL ORDERS">  
+                <h:form> 
+                    <h:panelGrid columns="1" style="width: 100%; text-align: center;">  
+                        <p:dataTable id="dataTable" var="o" value="#{orderBean.orderList}">  
+
+                            <p:column headerText="Order Date">  
+                                <h:outputText value="#{o.orderDate}">
+                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="GMT+2"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Table Name">  
+                                <h:outputText value="#{o.orderTableModel.tableName}" />  
+                            </p:column>  
+
+                            <p:column headerText="Product Name">  
+                                <h:outputText value="#{o.orderProductModel.productName}" />  
+                            </p:column>  
+                            
+                            
+                            <p:column headerText="Product Calorie">  
+                                <h:outputText value="#{o.orderProductModel.productCalorie}" />  
+                            </p:column>  
+                            
+                            <p:column headerText="Product Price">  
+                                <h:outputText value="#{o.orderProductModel.productPrice}" />  
+                            </p:column>
+                            
+                            <p:column headerText="Product Number">  
+                                <h:outputText value="#{o.orderNum}" />  
+                            </p:column>
+                            
+                            <p:column headerText="Total Price">  
+                                <h:outputText value="#{o.orderNum * o.orderProductModel.productPrice}" />  
+                            </p:column>
+
+                        </p:dataTable>  
+
+                    </h:panelGrid>  
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                    </p:confirmDialog>
+                </h:form>
+            </p:tab>
+
+        </p:accordionPanel>
+
+
+    </h:body>
+</html>
+

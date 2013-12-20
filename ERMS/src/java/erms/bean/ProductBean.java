@@ -35,7 +35,10 @@ public class ProductBean {
     private int productID;
     
     private List<ProductModel> allProducts;
+    
+    @ManagedProperty("#{param.categoryID}")
     private int categoryID;
+    
     private String productName;
     private String productDescription;
     private boolean productStatus;
@@ -204,6 +207,6 @@ public class ProductBean {
     }
     
     public String edit(){
-        return "categoryEdit?categoryID="+categoryID+"faces-redirect=true";
+        return "productEdit?categoryID="+categoryID+"&productID="+productID+"faces-redirect=true";
     }
 }

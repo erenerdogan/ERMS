@@ -29,4 +29,8 @@ public class FactoryDao {
     public static TableDaoInterface getTableDao() {
         return new TableDaoImpl();
     }
+    
+    public static OrderDaoInterface getOrderDao() {
+        return new OrderDaoImpl();
+    }
 }

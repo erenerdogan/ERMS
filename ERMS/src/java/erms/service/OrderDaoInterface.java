@@ -16,4 +16,5 @@ public interface OrderDaoInterface {
     void deleteOrder(int orderID);
     void deleteTableOrder(int tableID);
     void editStatus(List<OrderModel> order, boolean status);
+    List<OrderModel> getAllOrder(int userID);
 }
