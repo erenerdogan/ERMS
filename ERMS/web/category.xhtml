@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Restaurant Menü Yönetim Paneli</title>
+        <style>
+            .menu
+            {
+                width: 120px !important;
+                margin-left:auto;
+                margin-right:auto;
+                padding: auto;
+                text-align: center;
+            }
+
+            .panelGridCenter {
+                margin: 0 auto;
+
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <p:menubar> 
+
+
+                <p:menuitem styleClass="menu" value="Profile" action="#{navigationBean.goAdmin}" icon="ui-icon-home"/> 
+                <p:menuitem styleClass="menu" value="Category" action="#{navigationBean.goCategory}" icon="ui-icon-gear"/>
+                <p:menuitem styleClass="menu" value="Product" action="#{navigationBean.goProduct}" icon="ui-icon-calculator"/>
+                <p:menuitem styleClass="menu" value="Table"  action="#{navigationBean.goTable}" icon="ui-icon-key"/>
+                <p:menuitem styleClass="menu" value="Order"  action="#{navigationBean.goOrder}" icon="ui-icon-cart"/>
+
+                <f:facet name="options">
+                    <p:outputLabel value="#{userBean.name} #{userBean.surname} "/>
+                    <p:commandButton id="submitButton" action="#{userBean.logout}" value="Logout" icon="ui-icon-extlink" />  
+                </f:facet>  
+            </p:menubar>
+        </h:form>
+
+        <p:accordionPanel multiple="true">  
+            <p:tab title="ALL CATEGORIES">  
+                <h:form> 
+                    <h:panelGrid columns="1" style="width: 100%; text-align: center;">  
+                        <p:dataTable id="dataTable" var="c" value="#{categoryBean.allCategories}">  
+
+
+                            <p:column headerText="Name">  
+                                <h:outputText value="#{c.categoryName}" />  
+                            </p:column>  
+
+                            <p:column headerText="Image">
+                                <p:graphicImage style="margin: 10px 100px 10px 100px; width: 100px; height: 100px;" value="images/#{c.categoryImageModel.imagePath}" >
+
+                                </p:graphicImage>
+                            </p:column>
+
+                            <p:column> 
+                                <p:commandButton title="Edit" action="#{categoryBean.edit}" icon="ui-icon-pencil">
+                                    <f:param name="categoryID" value="#{c.categoryID}"/>
+                                </p:commandButton>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton title="Delete"  action="#{categoryBean.remove}" ajax="true" update="dataTable" icon="ui-icon-trash">
+                                    <f:param name="categoryID" value="#{c.categoryID}"/>
+                                    <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
+                                </p:commandButton> 
+                            </p:column>
+
+                        </p:dataTable>  
+
+                    </h:panelGrid>  
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                    </p:confirmDialog>
+                </h:form>
+            </p:tab>
+
+            <p:tab title="ADD CATEGORY">  
+                <h:form enctype="multipart/form-data">
+                    <h:panelGrid columns="3" cellpadding="10">  
+                        <p:outputLabel value="Category Name : "/>
+                        <p:inputText value="#{categoryBean.categoryName}" required="true" id="name"/>
+                        <p:message for="name" display="tooltip" />
+
+                        <p:outputLabel value="Select Image :"/>
+                        <p:fileUpload value="#{categoryBean.imageFile}" mode="simple" required="true" id="image"/> 
+                        <p:message for="image" display="tooltip" />
+
+                        <p:commandButton value="Upload" action="#{categoryBean.aktar}" ajax="false"/> 
+                    </h:panelGrid>  
+
+                </h:form>
+            </p:tab>
+
+        </p:accordionPanel>
+
+
+    </h:body>
+</html>
+

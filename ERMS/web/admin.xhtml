@@ -6,6 +6,16 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Restaurant Menü Yönetim Paneli</title>
+        <style>
+            .menu
+            {
+                width: 120px !important;
+                margin-left:auto;
+                margin-right:auto;
+                padding: auto;
+                text-align: center;
+            }
+        </style>
     </h:head>
     <h:body>
 
@@ -13,11 +23,11 @@
             <p:menubar> 
 
 
-                <p:menuitem styleClass="menu" value="Profile" action="admin?faces-redirect=true" icon="ui-icon-home"/> 
-                <p:menuitem styleClass="menu" value="Category" action="category?faces-redirect=true" icon="ui-icon-gear"/>
-                <p:menuitem styleClass="menu" value="Product" action="product?faces-redirect=true" icon="ui-icon-calculator"/>
-                <p:menuitem styleClass="menu" value="Table"  action="table?faces-redirect=true" icon="ui-icon-key"/>
-                <p:menuitem styleClass="menu" value="Order"  action="order?faces-redirect=true" icon="ui-icon-cart"/>
+                <p:menuitem styleClass="menu" value="Profile" action="#{navigationBean.goAdmin}" icon="ui-icon-home"/> 
+                <p:menuitem styleClass="menu" value="Category" action="#{navigationBean.goCategory}" icon="ui-icon-gear"/>
+                <p:menuitem styleClass="menu" value="Product" action="#{navigationBean.goProduct}" icon="ui-icon-calculator"/>
+                <p:menuitem styleClass="menu" value="Table"  action="#{navigationBean.goTable}" icon="ui-icon-key"/>
+                <p:menuitem styleClass="menu" value="Order"  action="#{navigationBean.goOrder}" icon="ui-icon-cart"/>
 
                 <f:facet name="options">
                     <p:outputLabel value="#{userBean.name} #{userBean.surname} "/>

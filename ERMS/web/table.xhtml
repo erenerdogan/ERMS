@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Restaurant Menü Yönetim Paneli</title>
+        <style>
+            .menu
+            {
+                width: 120px !important;
+                margin-left:auto;
+                margin-right:auto;
+                padding: auto;
+                text-align: center;
+            }
+
+            .panelGridCenter {
+                margin: 0 auto;
+
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <h:form>
+            <p:menubar> 
+
+
+                <p:menuitem styleClass="menu" value="Profile" action="#{navigationBean.goAdmin}" icon="ui-icon-home"/> 
+                <p:menuitem styleClass="menu" value="Category" action="#{navigationBean.goCategory}" icon="ui-icon-gear"/>
+                <p:menuitem styleClass="menu" value="Product" action="#{navigationBean.goProduct}" icon="ui-icon-calculator"/>
+                <p:menuitem styleClass="menu" value="Table"  action="#{navigationBean.goTable}" icon="ui-icon-key"/>
+                <p:menuitem styleClass="menu" value="Order"  action="#{navigationBean.goOrder}" icon="ui-icon-cart"/>
+
+                <f:facet name="options">
+                    <p:outputLabel value="#{userBean.name} #{userBean.surname} "/>
+                    <p:commandButton id="submitButton" action="#{userBean.logout}" value="Logout" icon="ui-icon-extlink" />  
+                </f:facet>  
+            </p:menubar>
+        </h:form>
+
+        <p:accordionPanel multiple="true">  
+            <p:tab title="ALL TABLES">  
+                <h:form> 
+                    <h:panelGrid columns="1" style="width: 100%; text-align: center;">  
+                        <p:dataTable id="dataTable" var="t" value="#{tableBean.allTables}">  
+
+                            <p:column headerText="Name">  
+                                <h:outputText value="#{t.tableName}" />  
+                            </p:column>  
+
+                            <p:column>
+                                <p:commandButton title="Delete"  action="#{tableBean.remove}" ajax="true" update="dataTable" icon="ui-icon-trash">
+                                    <f:param name="tableID" value="#{t.tableID}"/>
+                                    <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />  
+                                </p:commandButton> 
+                            </p:column>
+
+                        </p:dataTable>  
+
+                    </h:panelGrid>  
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                    </p:confirmDialog>
+                </h:form>
+            </p:tab>
+
+            <p:tab title="ADD TABLE">  
+                <h:form enctype="multipart/form-data">
+                    <h:panelGrid columns="3" cellpadding="10">  
+                        <p:outputLabel value="Table Name : "/>
+                        <p:inputText value="#{tableBean.tableName}" required="true" id="name"/>
+                        <p:message for="name" display="tooltip" />
+
+                        <p:commandButton value="ADD" action="#{tableBean.add}" ajax="false"/> 
+                    </h:panelGrid>  
+
+                </h:form>
+            </p:tab>
+
+        </p:accordionPanel>
+
+
+    </h:body>
+</html>
+

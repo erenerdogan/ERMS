@@ -14,7 +14,8 @@ import java.util.List;
 public interface CategoryDaoInterface {
     
     void createCategory(CategoryModel category, int userID);
-    void deleteCategory(CategoryModel category);
-    void editCategory(CategoryModel category);
-    List<CategoryModel> getAllCategory();
+    void deleteCategory(int categoryID);
+    void editCategory(CategoryModel category, int userID);
+    List<CategoryModel> getAllCategory(int userID);
+    CategoryModel getCategory(int categoryID);
 }

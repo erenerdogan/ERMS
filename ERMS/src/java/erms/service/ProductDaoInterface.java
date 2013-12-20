@@ -14,10 +14,10 @@ import java.util.List;
  */
 public interface ProductDaoInterface {
     
-    void createProduct(ProductModel product, int categoryID);
-    void deleteProduct(ProductModel product);
+    void createProduct(ProductModel product);
+    void deleteProduct(int productID);
     void editProduct(ProductModel product);
     void editStatus(ProductModel product);
-    List<ProductModel> getAllProduct();
+    List<ProductModel> getAllProduct(int userID);
     ProductModel getProduct(int ID);
 }

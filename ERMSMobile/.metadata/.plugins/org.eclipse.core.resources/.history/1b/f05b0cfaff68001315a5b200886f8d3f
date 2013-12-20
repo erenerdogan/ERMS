@@ -1,0 +1,80 @@
+package com.erms;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import tr.com.sehrizar.model.BahceModel;
+import tr.com.sehrizar.model.DosyaIslemModel;
+import tr.com.sehrizar.model.ImageDownloadModel;
+import android.graphics.Bitmap;
+import android.util.Log;
+
+public class CategoryModel {
+
+	private String categoryName;
+	private int categoryID;
+	private String categoryImagePath;
+	
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public int getCategoryID() {
+		return categoryID;
+	}
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
+	public String getCategoryImagePath() {
+		return categoryImagePath;
+	}
+	public void setCategoryImagePath(String categoryImagePath) {
+		this.categoryImagePath = categoryImagePath;
+	}
+	
+	public List<CategoryModel> parseJSON(JSONArray jsonArray) throws JSONException,
+			InterruptedException, ExecutionException, Exception {
+
+		List<CategoryModel> arrayList = new ArrayList<CategoryModel>();
+		
+			for (int i = 0; i < jsonArray.length(); i++) {
+				CategoryModel category = new CategoryModel();
+				JSONObject json = jsonArray.getJSONObject(i);
+
+				category.setCategoryID(json.getInt("categoryID"))
+				bahce.setBahceID(json.getString("id"));
+				bahce.setBahceName(json.getString("name"));
+				bahce.setBahceLatitute(json.getString("latitute"));
+				bahce.setBahceLongitude(json.getString("longitude"));
+				bahce.setBahceType(json.getString("type"));
+				bahce.setBahceIconName(json.getString("icon"));
+				Bitmap b = dosya.resimOku(bahce.getBahceIconName());
+				if (b == null) {
+					ImageDownloadModel imageDownload = new ImageDownloadModel();
+					b = imageDownload.execute(
+							getImageUrl() + json.getString("icon")).get();
+
+					dosya.resimYaz(b, json.getString("icon"));
+				}
+				bahce.setBahceIcon(Bitmap.createScaledBitmap(b, 42, 50, true));
+				arrayList.add(bahce);
+			}
+			dosya.dosyayaBahceYaz(arrayList);
+		} else {
+			arrayList = dosya.dosyadanBahceOku();
+			for (BahceModel bahceModel : arrayList) {
+				bahceModel.setBahceIcon(dosya.resimOku(bahceModel
+						.getBahceIconName()));
+			}
+		}
+		return arrayList;
+	}
+}
