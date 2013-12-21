@@ -1,0 +1,68 @@
+package com.erms.model;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+public class OrderModel implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 493584379191580827L;
+	
+	private int orderID;
+    private ProductModel orderProductModel;
+    private double orderNum;
+    private Date orderDate;
+    private boolean orderStatus;
+
+    public OrderModel() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
+	}
+
+	public ProductModel getOrderProductModel() {
+		return orderProductModel;
+	}
+
+	public void setOrderProductModel(ProductModel orderProductModel) {
+		this.orderProductModel = orderProductModel;
+	}
+
+	public double getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(double orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public boolean isOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(boolean orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+    
+    
+}

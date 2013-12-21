@@ -1,0 +1,102 @@
+package com.erms.model;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+public class OrderModel implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 493584379191580827L;
+	
+	private int orderID;
+    private String orderProductName;
+    private double orderProductPrice;
+    private int orderProductCalorie;
+    private int orderNum;
+    private Date orderDate;
+    private boolean orderStatus;
+
+    public OrderModel() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    
+
+	public String getOrderProductName() {
+		return orderProductName;
+	}
+
+
+
+	public void setOrderProductName(String orderProductName) {
+		this.orderProductName = orderProductName;
+	}
+
+
+
+	public double getOrderProductPrice() {
+		return orderProductPrice;
+	}
+
+
+
+	public void setOrderProductPrice(double orderProductPrice) {
+		this.orderProductPrice = orderProductPrice;
+	}
+
+
+
+	public int getOrderProductCalorie() {
+		return orderProductCalorie;
+	}
+
+
+
+	public void setOrderProductCalorie(int orderProductCalorie) {
+		this.orderProductCalorie = orderProductCalorie;
+	}
+
+
+
+	public int getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
+	}
+
+	
+
+	public double getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(double orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public boolean isOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(boolean orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+    
+    
+}

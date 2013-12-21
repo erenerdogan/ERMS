@@ -8,15 +8,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <ListView
-        android:id="@+id/listView"
+    <Button
+        android:id="@+id/menubtn"
         android:layout_width="fill_parent"
-        android:layout_height="320dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="false"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:dividerHeight="2dp"
-        android:listSelector="@drawable/list_selector" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="120dp"
+        android:text="Menu" />
+
+    <Button
+        android:id="@+id/orderbtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/menubtn"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Order List" />
+    
+     <Button
+        android:id="@+id/trybtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orderbtn"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="Try Recommendation" />
 
 </RelativeLayout>

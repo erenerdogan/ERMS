@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ProductDetailActivity" >
+
+    <ScrollView
+        android:id="@+id/baskanscrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true" >
+
+        <RelativeLayout
+            android:id="@+id/pdetailRelativeLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/pdetailimageView"
+                android:layout_width="fill_parent"
+                android:layout_height="180dip"
+                android:layout_gravity="center"
+                android:layout_margin="0dip"
+                android:adjustViewBounds="true"
+                android:padding="0dip"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/pdetailtextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/pdetailimageView"
+                android:layout_margin="5dip" />
+            <TextView
+                android:id="@+id/pdetailpricetextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/pdetailtextView"
+                android:layout_margin="5dip" />
+            
+            
+            <TextView
+                android:id="@+id/pdetailcaloritextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/pdetailpricetextView"
+                android:layout_margin="5dip" />
+
+            <EditText
+                android:id="@+id/pdetailnumberEditText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/pdetailcaloritextView"
+                android:ems="10"
+                android:inputType="number" >
+            </EditText>
+
+            <Button
+                android:id="@+id/pdetailaddbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pdetailnumberEditText"
+                android:text="ADD ORDER" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

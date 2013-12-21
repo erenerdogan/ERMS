@@ -1,0 +1,5 @@
+package com.erms.model;
+
+public class FileProcess {
+
+}

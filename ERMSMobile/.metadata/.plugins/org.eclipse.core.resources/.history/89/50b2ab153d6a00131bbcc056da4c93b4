@@ -1,0 +1,41 @@
+package com.erms;
+
+import com.erms.model.ProductModel;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class ProductDetailActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_product_detail);
+
+		Intent intent = getIntent();
+
+		Bundle bundle = intent.getExtras();
+
+		ProductModel pm = (ProductModel) bundle.getSerializable("product");
+
+		final ImageView pdImage = (ImageView) findViewById(R.id.pdetailimageView);
+		pdImage.setImageBitmap(pm.getProductImage());
+		final TextView pdDescription = (TextView) findViewById(R.id.pdetailtextView);
+		pdDescription.setText(pm.getProductDescription());
+		final TextView pdPrice = (TextView) findViewById(R.id.pdetailpricetextView);
+		pdPrice.setText("" + pm.getProductPrice());
+		final TextView pdCalorie = (TextView) findViewById(R.id.pdetailcaloritextView);
+		pdCalorie.setText("" + pm.getProductCalorie());
+		
+		final EditText pdNumber = (EditText) findViewById(R.id.pdetailnumberEditText);
+		final Button pdAddOrder = (Button) findViewById(R.id.pdetailaddbtn);
+
+	}
+
+}

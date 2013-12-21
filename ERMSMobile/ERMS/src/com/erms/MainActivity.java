@@ -28,7 +28,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.erms.adapter.CustomHomeListAdapter;
@@ -38,138 +40,46 @@ import com.erms.model.ProductModel;
 
 public class MainActivity extends Activity {
 	
-	
-	private List<CategoryModel> listCategory;
+	private Button categoryMenu, tryMenu, orderMenu, statusMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		String url = getResources().getString(R.string.WEBIndex);
-		String path = getResources().getString(R.string.WEBPath);
-		String webserviceCategory = getResources().getString(R.string.WEBServiceCategory);
-		String image = getResources().getString(R.string.WEBImage);
-		String appkey = getResources().getString(R.string.APPKEY);
-		
-		listCategory = new ArrayList<CategoryModel>();
-		FetchJSONModel fetchJSONModel = new FetchJSONModel();
-		try {
-			JSONArray jsonArray = fetchJSONModel.execute(url+path+webserviceCategory+appkey).get();
+		categoryMenu = (Button) findViewById(R.id.menubtn);
+		categoryMenu.setOnClickListener(new OnClickListener() {
 			
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject json = jsonArray.getJSONObject(i);
-				CategoryModel cm = new CategoryModel();
-				cm.setCategoryID(json.getInt("categoryID"));
-				cm.setCategoryName(json.getString("categoryName"));
-				JSONObject json2 =  json.getJSONObject(("categoryImageModel"));
-				ImageDownloadModel idm = new ImageDownloadModel();
-				cm.setCategoryImage(idm.execute(url+path+image+json2.getString("imagePath")).get());
-				
-				listCategory.add(cm);
-				
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
-		final ListView listView = (ListView) findViewById(R.id.listView);
-		listView.setAdapter(new CustomHomeListAdapter(this, listCategory));
-		
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
 			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view,
-					int i, long l) {
+			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Object o = listView.getItemAtPosition(i);
-				CategoryModel cm = (CategoryModel) o;
-				
-				Intent intent = new Intent(MainActivity.this,
-						ProductActivity.class);
-				intent.putExtra("categoryID", cm.getCategoryID());
+				Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
 				startActivity(intent);
 				
 			}
 		});
-	}
-
-	public class FetchJSONModel extends AsyncTask<String, Void, JSONArray> {
-
-		@Override
-		protected JSONArray doInBackground(String... params) {
-			// TODO Auto-generated method stub
-			JSONArray json = null;
-			StringBuilder sb = new StringBuilder();
-			try {
-				HttpClient httpClient = new DefaultHttpClient();
-				HttpGet httpget = new HttpGet(params[0]);
-				HttpResponse response;
-				try {
-					response = httpClient.execute(httpget);
-					HttpEntity entity = response.getEntity();
-					if (entity != null) {
-						InputStream instream = entity.getContent();
-						BufferedReader reader = new BufferedReader(
-								new InputStreamReader(instream));
-
-						String line = null;
-						try {
-							while ((line = reader.readLine()) != null) {
-								sb.append(line + "\n");
-							}
-						} catch (IOException e) {
-							e.printStackTrace();
-						} finally {
-							try {
-								instream.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-
-					}
-				} catch (Exception e) {
-				}
-
-				String data = sb.toString();
-				data = data.trim();
-
-				json = new JSONArray(data);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		orderMenu = (Button) findViewById(R.id.orderbtn);
+		orderMenu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, OrderListActivity.class);
+				startActivity(intent);
 			}
-			return json;
-		}
-
-	}
-	
-	public class ImageDownloadModel extends AsyncTask<String, Void, Bitmap> {
+		});
 		
-		@Override
-		protected Bitmap doInBackground(String... urls) {
-			String urldisplay = urls[0];
-			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new java.net.URL(urldisplay).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-				in.close();
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
+		tryMenu = (Button) findViewById(R.id.trybtn);
+		tryMenu.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, TryRecommendationActivity.class);
+				startActivity(intent);
 			}
-			return mIcon11;
-		}
-
+		});
 	}
+
 
 }

@@ -18,10 +18,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.erms.MainActivity.FetchJSONModel;
-import com.erms.MainActivity.ImageDownloadModel;
 import com.erms.adapter.CustomHomeListAdapter;
 import com.erms.adapter.CustomProductListAdapter;
+import com.erms.model.CategoryModel;
 import com.erms.model.ProductModel;
 
 import android.os.AsyncTask;
@@ -32,6 +31,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ProductActivity extends Activity {
@@ -43,6 +45,7 @@ public class ProductActivity extends Activity {
 		setContentView(R.layout.activity_product);
 		
 		int categoryID = getIntent().getExtras().getInt("categoryID");
+		double total = getIntent().getExtras().getDouble("total");
 		Log.w("CategoryID", ""+categoryID);
 		
 		String url = getResources().getString(R.string.WEBIndex);
@@ -62,11 +65,15 @@ public class ProductActivity extends Activity {
 				ProductModel pm = new ProductModel();
 				pm.setProductID(json.getInt("productID"));
 				pm.setProductName(json.getString("productName"));
-				pm.setProductPrice(json.getInt("productPrice"));
+				pm.setProductPrice(json.getDouble("productPrice"));
+				pm.setProductDescription(json.getString("productDescription"));
+				pm.setProductCalorie(json.getInt("productCalorie"));
 				
 				JSONObject json2 =  json.getJSONObject(("productImageModel"));
 				ImageDownloadModel idm = new ImageDownloadModel();
-				pm.setProductImage(idm.execute(url+path+image+json2.getString("imagePath")).get());
+				Bitmap b =idm.execute(url+path+image+json2.getString("imagePath")).get();
+				
+				pm.setProductImage(b);
 				
 				JSONObject json3 =  json.getJSONObject(("productCategoryModel"));
 				pm.setCategoryID(json3.getInt("categoryID"));
@@ -91,13 +98,37 @@ public class ProductActivity extends Activity {
 		
 		for (Iterator iterator = listProduct.iterator(); iterator.hasNext();) {
 			ProductModel type = (ProductModel) iterator.next();
-			if(type.getCategoryID() == categoryID){
+			if(categoryID == 0){
+				if(type.getProductPrice()<= total){
+					pmList.add(type);
+				}
+			}
+			else if(type.getCategoryID() == categoryID){
 				pmList.add(type);
 			}
 		}
 		
 		final ListView listView = (ListView) findViewById(R.id.productlistView);
 		listView.setAdapter(new CustomProductListAdapter(this, pmList));
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int i, long l) {
+				// TODO Auto-generated method stub
+				Object o = listView.getItemAtPosition(i);
+				ProductModel pm = (ProductModel) o;
+				
+				Intent intent = new Intent(ProductActivity.this,
+                        ProductDetailActivity.class);
+                Log.e("Tiklandı", "ProductActivity");
+                Bundle bundle = new Bundle();  
+                bundle.putSerializable("product", pm);
+                intent.putExtras(bundle);
+                Log.e("Tiklandı", "ProductActivity");
+                startActivity(intent);
+			}
+		});
 	}
 
 	public class FetchJSONModel extends AsyncTask<String, Void, JSONArray> {
@@ -150,9 +181,9 @@ public class ProductActivity extends Activity {
 		}
 
 	}
-	
+
 	public class ImageDownloadModel extends AsyncTask<String, Void, Bitmap> {
-		
+
 		@Override
 		protected Bitmap doInBackground(String... urls) {
 			String urldisplay = urls[0];
@@ -160,6 +191,7 @@ public class ProductActivity extends Activity {
 			try {
 				InputStream in = new java.net.URL(urldisplay).openStream();
 				mIcon11 = BitmapFactory.decodeStream(in);
+				Log.w("Size Bitmap H", ""+mIcon11.getHeight());
 				in.close();
 			} catch (Exception e) {
 				Log.e("Error", e.getMessage());

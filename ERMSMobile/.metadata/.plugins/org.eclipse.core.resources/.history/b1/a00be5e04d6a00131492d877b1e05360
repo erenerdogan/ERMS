@@ -1,0 +1,58 @@
+package com.erms;
+
+import com.erms.model.ProductModel;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class ProductDetailActivity extends Activity {
+	
+	private ImageView pdImage;
+	private TextView pdDescription,pdPrice,pdCalorie;
+	private EditText pdNumber;
+	private Button pdAddOrder;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_product_detail);
+
+		Intent intent = getIntent();
+
+		Bundle bundle = intent.getExtras();
+
+		ProductModel pm = (ProductModel) bundle.getSerializable("product");
+
+		pdImage = (ImageView) findViewById(R.id.pdetailimageView);
+		pdImage.setImageBitmap(pm.getProductImage());
+		pdDescription = (TextView) findViewById(R.id.pdetailtextView);
+		pdDescription.setText(pm.getProductDescription());
+		pdPrice = (TextView) findViewById(R.id.pdetailpricetextView);
+		pdPrice.setText("" + pm.getProductPrice() + " TL");
+		pdCalorie = (TextView) findViewById(R.id.pdetailcaloritextView);
+		pdCalorie.setText("" + pm.getProductCalorie() + " Cal");
+		
+		pdNumber = (EditText) findViewById(R.id.pdetailnumberEditText);
+		pdNumber.setText("1");
+		pdAddOrder = (Button) findViewById(R.id.pdetailaddbtn);
+		
+		pdAddOrder.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.w("Toplam Siparis Sayisi :", ""+pdNumber.getText());
+			}
+		});
+	}
+
+}

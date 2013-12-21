@@ -91,7 +91,7 @@ public class ProductModel implements Serializable, Parcelable{
 		parcel.writeInt(this.productCalorie);
 		parcel.writeInt(this.productID);
 		parcel.writeDouble(this.productPrice);
-		parcel.writeParcelable(this.productImage, i);
+		parcel.writeValue(this.productImage);
 	}
 
 	private void readFromParcel(Parcel in) {
@@ -101,7 +101,7 @@ public class ProductModel implements Serializable, Parcelable{
 		this.productCalorie = in.readInt();
 		this.productID = in.readInt();
 		this.productPrice = in.readDouble();
-		this.productImage = in.readParcelable(getClass().getClassLoader());
+		this.productImage = (Bitmap) in.readValue(getClass().getClassLoader());
 	}
 
 	// this is used to regenerate your object. All Parcelables must have a

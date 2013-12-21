@@ -171,7 +171,7 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
             while (rs.next()) {
                 userID = rs.getInt("uid");
             }
-            query = "SELECT * FROM CATEGORIES WHERE cuid = ?";
+            query = "SELECT * FROM CATEGORIES WHERE cuid = ? ORDER BY cname ASC ";
             
 
             ps = db.getCon().prepareStatement(query);

@@ -1,0 +1,88 @@
+package com.erms.adapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.erms.R;
+import com.erms.model.OrderModel;
+import com.erms.model.ProductModel;
+
+
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+
+public class CustomOrderListAdapter extends BaseAdapter {
+	
+	private List<OrderModel> listData;
+	private LayoutInflater layoutInflater;
+
+	
+
+	public CustomOrderListAdapter(Context context, List<OrderModel> listProduct) {
+		super();
+		this.listData = listProduct;
+		this.layoutInflater = LayoutInflater.from(context);
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return listData.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return listData.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		// TODO Auto-generated method stub
+		ViewHolder holder;
+		if(convertView==null){
+			convertView = layoutInflater.inflate(R.layout.orderlist_row, null);
+			holder = new ViewHolder();
+			holder.orderName = (TextView) convertView.findViewById(R.id.orderName);
+			holder.orderNum = (TextView) convertView.findViewById(R.id.orderNum);
+			holder.orderCalori = (TextView) convertView.findViewById(R.id.orderCalori);
+			holder.orderPrice = (TextView) convertView.findViewById(R.id.orderPrice);
+			holder.orderTotalPrice = (TextView) convertView.findViewById(R.id.orderTotalPrice);
+			convertView.setTag(holder);
+		}else{
+			holder = (ViewHolder) convertView.getTag();
+		}
+		OrderModel om = listData.get(position);
+		
+		holder.orderName.setText(""+om.getOrderProductName());
+		holder.orderNum.setText(""+om.getOrderNum()+ " Number");
+		holder.orderCalori.setText(""+om.getOrderProductCalorie() + " Cal");
+		holder.orderPrice.setText(""+om.getOrderProductPrice() + " TL");
+		double total = om.getOrderProductPrice() * om.getOrderNum();
+		holder.orderTotalPrice.setText(total + " TL");
+		return convertView;
+	}
+	
+	static class ViewHolder{
+		TextView orderName;
+		TextView orderNum;
+		TextView orderCalori;
+		TextView orderTotalPrice;
+		TextView orderPrice;
+	}
+
+}

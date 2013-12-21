@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".TryRecommendationActivity" >
+
+    <EditText
+        android:id="@+id/tryAmountEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/tryPeople"
+        android:layout_below="@+id/tryPeopleEdit"
+        android:layout_margin="5dip"
+        android:layout_toRightOf="@+id/tryAmount"
+        android:ems="10"
+        android:inputType="number" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/trybtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tryAmountEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dip"
+        android:layout_marginTop="28dp"
+        android:text="TRY RECOMMENDATİ" />
+
+    <TextView
+        android:id="@+id/tryAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tryAmountEdit"
+        android:layout_alignBottom="@+id/tryAmountEdit"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dip"
+        android:text="Total Amount :" />
+
+    <TextView
+        android:id="@+id/tryPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tryPeopleEdit"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/tryPeopleEdit"
+        android:layout_margin="5dip"
+        android:text="Number of People :" />
+
+    <EditText
+        android:id="@+id/tryPeopleEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dip"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/tryPeople"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>
