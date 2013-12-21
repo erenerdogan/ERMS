@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ERMS</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="WEBIndex">http://37.123.52.243:8084/</string>
+	<string name="WEBPath">ERMS/</string>
+	<string name="WEBServiceCategory">resources/json/product/get</string>
+</resources>

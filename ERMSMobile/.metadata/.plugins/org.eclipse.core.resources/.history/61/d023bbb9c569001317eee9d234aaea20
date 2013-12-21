@@ -1,0 +1,81 @@
+package com.erms.model;
+
+import java.io.Serializable;
+
+import android.graphics.Bitmap;
+
+public class ProductModel implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5495173279502668938L;
+	private int categoryID;
+	private int productID;
+    private String productName;
+    private String productDescription;
+    private int productCalorie;
+    private double productPrice;
+    private boolean productStatus;
+    private String productImagePath;
+	private transient Bitmap productImage;
+	
+	
+	public ProductModel() {
+		super();
+	}
+	public int getCategoryID() {
+		return categoryID;
+	}
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
+	public int getProductID() {
+		return productID;
+	}
+	public void setProductID(int productID) {
+		this.productID = productID;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getProductDescription() {
+		return productDescription;
+	}
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+	public int getProductCalorie() {
+		return productCalorie;
+	}
+	public void setProductCalorie(int productCalorie) {
+		this.productCalorie = productCalorie;
+	}
+	public double getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
+	}
+	public boolean isProductStatus() {
+		return productStatus;
+	}
+	public void setProductStatus(boolean productStatus) {
+		this.productStatus = productStatus;
+	}
+	public String getProductImagePath() {
+		return productImagePath;
+	}
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
+	}
+	public Bitmap getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(Bitmap productImage) {
+		this.productImage = productImage;
+	}
+}

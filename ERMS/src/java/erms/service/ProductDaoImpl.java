@@ -256,4 +256,62 @@ public class ProductDaoImpl implements ProductDaoInterface {
         }
         return null;
     }
+
+    @Override
+    public List<ProductModel> getWSAllProduct(String appKey) {
+        
+        List<ProductModel> allProducts = new ArrayList<ProductModel>();
+        try {
+            String query = "SELECT uid FROM USERS WHERE uappkey=?";
+            ps = db.getCon().prepareStatement(query);
+            ps.setString(1, appKey);
+            rs = ps.executeQuery();
+            int userID = 0;
+            while (rs.next()) {
+                userID = rs.getInt("uid");
+            }
+            
+            query = "SELECT * FROM PRODUCTS,CATEGORIES WHERE categories.cuid=? AND categories.cid =products.pcid AND products.pstatus=1";
+            ps = db.getCon().prepareStatement(query);
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ProductModel pm = new ProductModel();
+                pm.setProductID(rs.getInt("pid"));
+                pm.setProductCalorie(rs.getInt("pcalori"));
+                pm.setProductDescription(rs.getString("pdescription"));
+                pm.setProductPrice(rs.getDouble("pprice"));
+                pm.setProductName(rs.getString("pname"));
+                pm.setProductStatus(rs.getBoolean("pstatus"));
+                query = "SELECT * FROM CATEGORIES WHERE categories.cid = ?";
+                ps = db.getCon().prepareStatement(query);
+                ps.setInt(1, rs.getInt("pcid"));
+                ResultSet rs2 = ps.executeQuery();
+                while (rs2.next()) {
+                    CategoryModel cm = new CategoryModel();
+                    cm.setCategoryID(rs2.getInt("cid"));
+                    cm.setCategoryName(rs2.getString("cname"));
+                    pm.setProductCategoryModel(cm);
+                }
+
+                query = "SELECT * FROM IMAGES WHERE iid = ?";
+
+                ps = db.getCon().prepareStatement(query);
+                ps.setInt(1, rs.getInt("piid"));
+                ResultSet rs3 = ps.executeQuery();
+                while (rs3.next()) {
+                    ImageModel im = new ImageModel();
+                    im.setImageID(rs3.getInt("iid"));
+                    im.setImagePath(rs3.getString("ipath"));
+                    im.setImageThumb(rs3.getString("ithumb"));
+                    pm.setProductImageModel(im);
+                }
+                allProducts.add(pm);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allProducts;
+    }
 }

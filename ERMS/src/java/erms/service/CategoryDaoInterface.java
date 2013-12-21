@@ -18,4 +18,5 @@ public interface CategoryDaoInterface {
     void editCategory(CategoryModel category, int userID);
     List<CategoryModel> getAllCategory(int userID);
     CategoryModel getCategory(int categoryID);
+    List<CategoryModel> getWSAllCategory(String appKey);
 }

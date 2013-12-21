@@ -20,4 +20,5 @@ public interface ProductDaoInterface {
     void editStatus(ProductModel product);
     List<ProductModel> getAllProduct(int userID);
     ProductModel getProduct(int categoryID,int productID);
+    List<ProductModel> getWSAllProduct(String appKey);
 }

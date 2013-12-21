@@ -1,0 +1,210 @@
+package tr.com.sehrizar;
+
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+
+import tr.com.sehrizar.model.FetchJSONModel;
+import tr.com.sehrizar.model.HaberModel;
+import tr.com.sehrizar.model.InternetKontrolModel;
+import tr.com.sehrizar.model.MenuModel;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.google.android.gms.internal.di;
+import com.viewpagerindicator.CirclePageIndicator;
+
+public class MainActivity extends Activity {
+
+	private ArrayList<HaberModel> listData;
+	private ArrayList<MenuModel> arrayList;
+	private ProgressDialog dialog;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		//Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/myFont.ttf");
+	    //TextView myTextView = (TextView)findViewById(R.id.myTextView);
+	    //myTextView.setTypeface(myTypeface);
+		
+		
+		InternetKontrolModel internet = new InternetKontrolModel(this);
+		
+		arrayList = new ArrayList<MenuModel>();
+		listData = new ArrayList<HaberModel>();
+		// WS Menu basla
+
+		String url = getResources().getString(R.string.WEBIndex);
+		String haberlerUrl = getResources().getString(R.string.WEBAnaHaberler);
+		String imageUrl = getResources().getString(R.string.WEBImage);
+		String appkey = getResources().getString(R.string.APPKEY)haberlerUrl;
+		FetchJSONModel json = new FetchJSONModel();
+		try {
+			JSONArray jsonArray = json.execute(url).get();
+			MenuModel m = new MenuModel(imageUrl);
+
+			arrayList = m.parseJSON(jsonArray,internet.isOnline());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// WS Menu bitir
+
+		// WS Haberler Basla
+		json = new FetchJSONModel();
+		try {
+			JSONArray jsonHaberArray = json.execute(haberlerUrl).get();
+			HaberModel haberModel = new HaberModel(imageUrl);
+			listData = haberModel.anaHaberParseJSON(jsonHaberArray,internet.isOnline());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// WS Haberler Bitir
+
+		ViewPagerAdapter adapter = new ViewPagerAdapter(this, listData);
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
+		pager.setAdapter(adapter);
+		indicator.setViewPager(pager);
+		// arrayList = displayeHomeMenu();
+
+		final ListView listView = (ListView) findViewById(R.id.listView);
+		listView.setAdapter(new CustomHomeListAdapter(this, arrayList));
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int i, long l) {
+				Object o = listView.getItemAtPosition(i);
+				MenuModel menu = (MenuModel) o;
+				Intent intent=null;
+				if (menu.getMenuTitle().equalsIgnoreCase(
+						"En Yak\u0131n Park ve Bah\u00e7e")) {
+					intent = new Intent(MainActivity.this,
+							EnYakinParkveBahceActivity.class);
+					intent.putExtra("menu", "En Yak\u0131n Park ve Bah\u00e7e");
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase("Park Bulucu")) {
+					intent = new Intent(MainActivity.this,
+							ParkBulucuActivity.class);
+					intent.putExtra("menu", "Park Bulucu");
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase(
+						"Sosyal Tesisler")) {
+					intent = new Intent(MainActivity.this,
+							SosyalTesislerActivity.class);
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase("Haberler")) {
+					intent = new Intent(MainActivity.this,
+							HaberlerActivity.class);
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase("Etkinlikler")) {
+					intent = new Intent(MainActivity.this,
+							EtkinliklerActivity.class);
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase(
+						"Ba\u015fkan\u0131n Mesaj\u0131")) {
+					intent = new Intent(MainActivity.this,
+							BaskanMesajActivity.class);
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase(
+						"Lale Bahçeleri")) {
+					intent = new Intent(MainActivity.this,
+							GLbahceMapActivity.class);
+					intent.putExtra("menu", "Lale Bahçeleri");
+					//startActivity(intent);
+				} else if (menu.getMenuTitle()
+						.equalsIgnoreCase("Gül Bahçeleri")) {
+					 intent = new Intent(MainActivity.this,
+							 GLbahceMapActivity.class);
+					intent.putExtra("menu", "Gül Bahçeleri");
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase(
+						"Uygulama Hakk\u0131nda")) {
+					intent = new Intent(MainActivity.this,
+							UygulamaHakActivity.class);
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase(
+						"\u0130leti\u015fim")) {
+					 intent = new Intent(MainActivity.this,
+							IletisimActivity.class);
+					//startActivity(intent);
+				} else if (menu.getMenuTitle().equalsIgnoreCase(
+						"Dilek ve Düşünceleriniz")) {
+					 intent = new Intent(MainActivity.this,
+							DilekDusunceActivity.class);
+					//startActivity(intent);
+				}
+				ProgressDialogAsync async = new ProgressDialogAsync();
+				async.execute(intent);
+			}
+		});
+
+	}
+
+	private class ProgressDialogAsync extends AsyncTask<Intent, String, Void> implements OnCancelListener{
+		ProgressHUD mProgressHUD;    	
+
+    	@Override
+    	protected void onPreExecute() {
+        	mProgressHUD = ProgressHUD.show(MainActivity.this,"", true,true,this);
+    		super.onPreExecute();
+    	}
+    	
+		@Override
+		protected Void doInBackground(Intent... params) {
+			try {
+				publishProgress("");
+				Thread.sleep(500);
+				publishProgress("");
+				Thread.sleep(500);
+				publishProgress("");
+				startActivity(params[0]);
+				publishProgress("");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+    	
+		@Override
+		protected void onProgressUpdate(String... values) {
+			mProgressHUD.setMessage(values[0]);
+			super.onProgressUpdate(values);
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			mProgressHUD.dismiss();
+			super.onPostExecute(result);
+		}
+
+		@Override
+		public void onCancel(DialogInterface dialog) {
+			this.cancel(true);
+			mProgressHUD.dismiss();
+		}		
+	}
+}

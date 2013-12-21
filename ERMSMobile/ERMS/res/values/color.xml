@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="list_row_default">#FFFFFF</color>
+    <color name="list_row_pressed">#008CEF</color>
+    <color name="list_row_selected">#FFFFFF</color>
+    <color name="home_backgraound">#FFFFFF</color>
+</resources>

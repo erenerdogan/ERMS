@@ -1,0 +1,15 @@
+package com.erms.model;
+
+import android.graphics.Bitmap;
+
+public class ProductModel {
+	private int categoryID;
+	private int productID;
+    private String productName;
+    private String productDescription;
+    private int productCalorie;
+    private double productPrice;
+    private boolean productStatus;
+    private String productImagePath;
+	private transient Bitmap productImage;
+}

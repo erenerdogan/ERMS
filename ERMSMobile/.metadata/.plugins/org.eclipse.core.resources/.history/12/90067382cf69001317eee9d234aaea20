@@ -1,0 +1,125 @@
+package com.erms.model;
+
+import java.io.Serializable;
+
+import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ProductModel implements Serializable, Parcelable{
+	
+	
+	private static final long serialVersionUID = -5495173279502668938L;
+	private int categoryID;
+	private int productID;
+    private String productName;
+    private String productDescription;
+    private int productCalorie;
+    private double productPrice;
+    private boolean productStatus;
+    private String productImagePath;
+	private Bitmap productImage;
+	
+	
+	public ProductModel() {
+		super();
+	}
+	public int getCategoryID() {
+		return categoryID;
+	}
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
+	public int getProductID() {
+		return productID;
+	}
+	public void setProductID(int productID) {
+		this.productID = productID;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getProductDescription() {
+		return productDescription;
+	}
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+	public int getProductCalorie() {
+		return productCalorie;
+	}
+	public void setProductCalorie(int productCalorie) {
+		this.productCalorie = productCalorie;
+	}
+	public double getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
+	}
+	public boolean isProductStatus() {
+		return productStatus;
+	}
+	public void setProductStatus(boolean productStatus) {
+		this.productStatus = productStatus;
+	}
+	public String getProductImagePath() {
+		return productImagePath;
+	}
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
+	}
+	public Bitmap getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(Bitmap productImage) {
+		this.productImage = productImage;
+	}
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		parcel.writeString(this.productDescription);
+		parcel.writeString(this.productImagePath);
+		parcel.writeString(this.productName);
+		parcel.writeInt(this.productCalorie);
+		parcel.writeInt(this.productID);
+		parcel.writeDouble(this.productPrice);
+		parcel.writeParcelable(this.productImage, i);
+	}
+
+	private void readFromParcel(Parcel in) {
+		this.bahceID = in.readString();
+		this.bahceName = in.readString();
+		this.bahceLatitute = in.readString();
+		this.bahceLongitude = in.readString();
+		this.bahceType = in.readString();
+		this.bahceControl = in.readString();
+		this.bahceIcon = in.readParcelable(getClass().getClassLoader());
+	}
+
+	// this is used to regenerate your object. All Parcelables must have a
+	// CREATOR that implements these two methods
+	public static final Parcelable.Creator<BahceModel> CREATOR = new Parcelable.Creator<BahceModel>() {
+		@Override
+		public BahceModel createFromParcel(Parcel in) {
+			return new BahceModel(in);
+		}
+
+		@Override
+		public BahceModel[] newArray(int size) {
+			return new BahceModel[size];
+		}
+	};
+
+	public BahceModel(Parcel in) {
+		readFromParcel(in);
+	}
+
+}

@@ -67,7 +67,7 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
             ps = db.getCon().prepareStatement(query);
             ps.setInt(1, categoryID);
             rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 //cm.setCategoryID(rs.getInt("cid"));
                 if (!category.getCategoryName().equalsIgnoreCase(rs.getString("cname"))) {
@@ -77,8 +77,8 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
                     ps.setInt(2, categoryID);
                     ps.setString(1, category.getCategoryName());
                     ps.executeUpdate();
-                } 
-                
+                }
+
                 //yeni resim eklendimi
                 if (category.getCategoryImageModel() != null) {
                     ImageModel im = category.getCategoryImageModel();
@@ -157,5 +157,49 @@ public class CategoryDaoImpl implements CategoryDaoInterface {
             Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public List<CategoryModel> getWSAllCategory(String appKey) {
+        List<CategoryModel> allCategories = new ArrayList<CategoryModel>();
+        try {
+            String query = "SELECT uid FROM USERS WHERE uappkey=?";
+            ps = db.getCon().prepareStatement(query);
+            ps.setString(1, appKey);
+            rs = ps.executeQuery();
+            int userID = 0;
+            while (rs.next()) {
+                userID = rs.getInt("uid");
+            }
+            query = "SELECT * FROM CATEGORIES WHERE cuid = ?";
+            
+
+            ps = db.getCon().prepareStatement(query);
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CategoryModel cm = new CategoryModel();
+                cm.setCategoryID(rs.getInt("cid"));
+                cm.setCategoryName(rs.getString("cname"));
+                query = "SELECT * FROM IMAGES WHERE iid = ?";
+
+                ps = db.getCon().prepareStatement(query);
+                ps.setInt(1, rs.getInt("ciid"));
+                ResultSet rs2 = ps.executeQuery();
+                while (rs2.next()) {
+                    ImageModel im = new ImageModel();
+                    im.setImageID(rs2.getInt("iid"));
+                    im.setImagePath(rs2.getString("ipath"));
+                    im.setImageThumb(rs2.getString("ithumb"));
+                    cm.setCategoryImageModel(im);
+                }
+
+                allCategories.add(cm);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allCategories;
     }
 }

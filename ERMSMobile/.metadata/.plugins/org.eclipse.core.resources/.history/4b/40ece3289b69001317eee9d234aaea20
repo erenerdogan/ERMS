@@ -1,0 +1,41 @@
+package com.erms.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class CategoryModel implements Serializable{
+
+	private String categoryName;
+	private int categoryID;
+	private String categoryImagePath;
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public int getCategoryID() {
+		return categoryID;
+	}
+
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
+
+	public String getCategoryImagePath() {
+		return categoryImagePath;
+	}
+
+	public void setCategoryImagePath(String categoryImagePath) {
+		this.categoryImagePath = categoryImagePath;
+	}
+}
