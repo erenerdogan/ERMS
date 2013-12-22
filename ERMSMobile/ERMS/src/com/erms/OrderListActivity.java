@@ -1,8 +1,19 @@
 package com.erms;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.erms.adapter.CustomOrderListAdapter;
 import com.erms.adapter.CustomProductListAdapter;
@@ -108,17 +119,37 @@ public class OrderListActivity extends Activity {
         protected Void doInBackground(Void... params) {
         	
             try {
-				Thread.sleep(10000);
+				Thread.sleep(15000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+            
+            String url = getResources().getString(R.string.WEBIndex);
+    		String path = getResources().getString(R.string.WEBPath);
+    		String wsOrder =  getResources().getString(R.string.WEBServiceOrder);
+    		String wsOrderNumber =  getResources().getString(R.string.WEBServiceOrderNumber);
+        	for (int i = 0; i < list.size(); i++) {
+        		OrderModel om = list.get(i);
+        		HttpClient httpClient = new DefaultHttpClient();
+				HttpGet httpget = new HttpGet(url+path+wsOrder+om.getOrderProductID()+"&"+wsOrderNumber+om.getOrderNum());
+				HttpResponse response;
+				try {
+					response = httpClient.execute(httpget);
+					HttpEntity entity = response.getEntity();
+				} catch (Exception e) {
+				}
+
+			}
+        	list.clear();
+        	
 			return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-        	list.remove(0);
+        	
+        	
 			FileProcess fp;
 			try {
 				fp = new FileProcess("orderList.data");

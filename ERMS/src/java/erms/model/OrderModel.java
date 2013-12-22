@@ -4,7 +4,9 @@
  */
 package erms.model;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 /**
  *
@@ -14,7 +16,7 @@ public class OrderModel {
     
     private int orderID;
     private ProductModel orderProductModel;
-    private double orderNum;
+    private int orderNum;
     private Date orderDate;
     private boolean orderStatus;
     private TableModel orderTableModel;
@@ -40,11 +42,11 @@ public class OrderModel {
         this.orderID = orderID;
     }
 
-    public double getOrderNum() {
+    public int getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(double orderNum) {
+    public void setOrderNum(int orderNum) {
         this.orderNum = orderNum;
     }
 

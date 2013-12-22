@@ -66,6 +66,7 @@ public class ProductDetailActivity extends Activity {
 				om.setOrderProductName(pm.getProductName());
 				om.setOrderProductCalorie(pm.getProductCalorie());
 				om.setOrderProductPrice(pm.getProductPrice());
+				om.setOrderProductID(pm.getProductID());
 				
 				FileProcess fp;
 				try {

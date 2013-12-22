@@ -11,6 +11,7 @@ public class OrderModel implements Serializable{
 	private static final long serialVersionUID = 493584379191580827L;
 	
 	private int orderID;
+	private int orderProductID;
     private String orderProductName;
     private double orderProductPrice;
     private int orderProductCalorie;
@@ -23,6 +24,18 @@ public class OrderModel implements Serializable{
 	}
     
     
+
+	public int getOrderProductID() {
+		return orderProductID;
+	}
+
+
+
+	public void setOrderProductID(int orderProductID) {
+		this.orderProductID = orderProductID;
+	}
+
+
 
 	public String getOrderProductName() {
 		return orderProductName;
@@ -70,7 +83,7 @@ public class OrderModel implements Serializable{
 
 	
 
-	public double getOrderNum() {
+	public int getOrderNum() {
 		return orderNum;
 	}
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ERMS</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_product">ProductActivity</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <string name="WEBIndex">http://37.123.52.243:8084/</string>
+    <string name="WEBPath">ERMS/</string>
+    <string name="WEBServiceCategory">resources/json/category/get?appkey=</string>
+    <string name="WEBServiceProduct">resources/json/product/get?appkey=</string>
+    <string name="WEBServiceProductCategoryID">categoryID=</string>
+    <string name="WEBImage">images/</string>
+    <string name="APPKEY">7766-8412481267120-2411794-7916126-23-92</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_order_list">OrderListActivity</string>
+    <string name="title_activity_try_recommendation">TryRecommendationActivity</string>
+
+</resources>

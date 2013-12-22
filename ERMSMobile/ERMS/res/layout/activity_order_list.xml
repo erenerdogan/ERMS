@@ -27,6 +27,6 @@
          android:layout_alignParentBottom="true"
          android:layout_alignRight="@+id/orderlistView"
          android:layout_marginBottom="16dp"
-         android:text="Button" />
+         android:text="Send Order" />
 
 </RelativeLayout>

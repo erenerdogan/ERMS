@@ -69,7 +69,7 @@ public class CustomOrderListAdapter extends BaseAdapter {
 		OrderModel om = listData.get(position);
 		
 		holder.orderName.setText(""+om.getOrderProductName());
-		holder.orderNum.setText(""+om.getOrderNum()+ " Number");
+		holder.orderNum.setText("#"+om.getOrderNum());
 		holder.orderCalori.setText(""+om.getOrderProductCalorie() + " Cal");
 		holder.orderPrice.setText(""+om.getOrderProductPrice() + " TL");
 		double total = om.getOrderProductPrice() * om.getOrderNum();
