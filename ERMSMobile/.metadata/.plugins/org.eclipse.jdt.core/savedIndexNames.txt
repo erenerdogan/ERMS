@@ -1,8 +1,6 @@
 INDEX VERSION 1.126+/Users/eren/Desktop/ERMS/ERMS/ERMSMobile/.metadata/.plugins/org.eclipse.jdt.core
-3921393473.index
 16058942.index
 2711679869.index
-2040064081.index
 1076418968.index
 2300993719.index
 3848462231.index
@@ -10,8 +8,6 @@ INDEX VERSION 1.126+/Users/eren/Desktop/ERMS/ERMS/ERMSMobile/.metadata/.plugins/
 328584621.index
 312773662.index
 2712973783.index
-3532731497.index
-58126298.index
 3964757523.index
 1249511748.index
 1027925375.index
@@ -19,7 +15,6 @@ INDEX VERSION 1.126+/Users/eren/Desktop/ERMS/ERMS/ERMSMobile/.metadata/.plugins/
 4059311135.index
 3365219682.index
 2225006474.index
-3727932290.index
 2283681253.index
 3896672430.index
 2067697569.index

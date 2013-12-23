@@ -10,7 +10,7 @@
     <string name="title_activity_order_list">Order List</string>
     <string name="title_activity_try_recommendation">Recommendation</string>
     
-    <string name="WEBIndex">http://37.123.52.131:8084/</string>
+    <string name="WEBIndex">http://37.123.52.243:8084/</string>
     <string name="WEBPath">ERMS/</string>
     <string name="WEBServiceCategory">resources/json/category/get?appkey=</string>
     <string name="WEBServiceProduct">resources/json/product/get?appkey=</string>
