@@ -129,8 +129,8 @@ public class ProductDaoImpl implements ProductDaoInterface {
                     ps.setInt(1, s);
                     ps.executeUpdate();
                 }
-                
-                if(product.getProductCategoryModel().getCategoryID()!=rs.getInt("pcid")){
+
+                if (product.getProductCategoryModel().getCategoryID() != rs.getInt("pcid")) {
                     query = "UPDATE PRODUCTS SET pcid=? WHERE pid=?";
                     ps = db.getCon().prepareStatement(query);
                     ps.setInt(2, productID);
@@ -161,10 +161,11 @@ public class ProductDaoImpl implements ProductDaoInterface {
 
     @Override
     public List<ProductModel> getAllProduct(int userID) {
-        String query = "SELECT * FROM PRODUCTS,CATEGORIES WHERE categories.cuid=? AND categories.cid =products.pcid";
+        String query = "SELECT * FROM PRODUCTS,CATEGORIES, IMAGES WHERE categories.cuid=? AND categories.cid =products.pcid AND products.piid = images.iid";
         List<ProductModel> allProducts = new ArrayList<ProductModel>();
         try {
             ps = db.getCon().prepareStatement(query);
+
             ps.setInt(1, userID);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -175,29 +176,21 @@ public class ProductDaoImpl implements ProductDaoInterface {
                 pm.setProductPrice(rs.getDouble("pprice"));
                 pm.setProductName(rs.getString("pname"));
                 pm.setProductStatus(rs.getBoolean("pstatus"));
-                query = "SELECT * FROM CATEGORIES WHERE categories.cid = ?";
-                ps = db.getCon().prepareStatement(query);
-                ps.setInt(1, rs.getInt("pcid"));
-                ResultSet rs2 = ps.executeQuery();
-                while (rs2.next()) {
-                    CategoryModel cm = new CategoryModel();
-                    cm.setCategoryID(rs2.getInt("cid"));
-                    cm.setCategoryName(rs2.getString("cname"));
-                    pm.setProductCategoryModel(cm);
-                }
 
-                query = "SELECT * FROM IMAGES WHERE iid = ?";
 
-                ps = db.getCon().prepareStatement(query);
-                ps.setInt(1, rs.getInt("piid"));
-                ResultSet rs3 = ps.executeQuery();
-                while (rs3.next()) {
-                    ImageModel im = new ImageModel();
-                    im.setImageID(rs3.getInt("iid"));
-                    im.setImagePath(rs3.getString("ipath"));
-                    im.setImageThumb(rs3.getString("ithumb"));
-                    pm.setProductImageModel(im);
-                }
+                CategoryModel cm = new CategoryModel();
+                cm.setCategoryID(rs.getInt("cid"));
+                cm.setCategoryName(rs.getString("cname"));
+                pm.setProductCategoryModel(cm);
+
+
+
+                ImageModel im = new ImageModel();
+                im.setImageID(rs.getInt("iid"));
+                im.setImagePath(rs.getString("ipath"));
+                im.setImageThumb(rs.getString("ithumb"));
+                pm.setProductImageModel(im);
+
                 allProducts.add(pm);
             }
             ps.close();
@@ -247,8 +240,9 @@ public class ProductDaoImpl implements ProductDaoInterface {
                     im.setImageThumb(rs3.getString("ithumb"));
                     pm.setProductImageModel(im);
                 }
-                db.connectionClose();
                 return pm;
+
+
 
             }
         } catch (SQLException ex) {
@@ -259,7 +253,7 @@ public class ProductDaoImpl implements ProductDaoInterface {
 
     @Override
     public List<ProductModel> getWSAllProduct(String appKey) {
-        
+
         List<ProductModel> allProducts = new ArrayList<ProductModel>();
         try {
             String query = "SELECT uid FROM USERS WHERE uappkey=?";
@@ -270,7 +264,7 @@ public class ProductDaoImpl implements ProductDaoInterface {
             while (rs.next()) {
                 userID = rs.getInt("uid");
             }
-            
+
             query = "SELECT * FROM PRODUCTS,CATEGORIES WHERE categories.cuid=? AND categories.cid =products.pcid AND products.pstatus=1";
             ps = db.getCon().prepareStatement(query);
             ps.setInt(1, userID);
@@ -309,6 +303,8 @@ public class ProductDaoImpl implements ProductDaoInterface {
                 allProducts.add(pm);
             }
             ps.close();
+
+
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

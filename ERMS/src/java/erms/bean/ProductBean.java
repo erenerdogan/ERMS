@@ -141,6 +141,7 @@ public class ProductBean {
     }
     
     public List<ProductModel> getAllProducts() {
+        System.out.println("Get All Products User ID :" +userBean.getId());
         allProducts = FactoryDao.getProductDao().getAllProduct(userBean.getId());
         return allProducts;
     }
@@ -203,6 +204,7 @@ public class ProductBean {
     }
     
     public void remove(){
+        System.out.println("Remove Product");
         FactoryDao.getProductDao().deleteProduct(productID);
     }
     
